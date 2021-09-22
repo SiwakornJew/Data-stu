@@ -142,36 +142,33 @@ class LinkedList :
             self.head = p
             self.size += 1
 
-
-lit =input("Enter Input : ")
-
-lit=lit.split(',')
-cursor=0
-dLinked=LinkedList()
-for i in lit:
-    a=i.split()
-    if 'I' in a[0]:
-        if cursor !=0 :
-            dLinked.insertAfter(cursor-1,a[1])
+inp = input("Enter Input : ").split(",")
+nowCursor = 0
+word = LinkedList()
+for i in inp:
+    if i[0]=='I':
+        if(nowCursor!=0):
+            word.insertAfter(nowCursor-1,i[2:])
         else:
-            dLinked.addHead(a[1])
-        cursor+=1
-    elif 'L' in a[0] and cursor>0:
-        cursor-=1
-    elif 'R' in a[0] and cursor<len(dLinked):
-        cursor+=1
-    elif 'B' and cursor>0:
-        cursor-=1
-        dLinked.deleteAfter(cursor-1)
-    elif 'D' and cursor<len(dLinked):
-        if cursor==0:
-            dLinked.deleteHead()
+            word.addHead(i[2:])
+        nowCursor+=1
+    elif i[0]=='L'and nowCursor>0:
+        nowCursor-=1
+    elif i[0]=='R'and nowCursor<len(word):
+        nowCursor+=1
+    elif i[0]=='B'and nowCursor>0:
+        nowCursor-=1
+        word.deleteAfter(nowCursor-1)
+    elif i[0]=='D'and nowCursor<len(word):
+        if nowCursor==0:
+            word.deleteHead()
         else:
-            dLinked.deleteAfter(cursor-1)
-for i in range(len(dLinked)):
-    if i==cursor:
+            word.deleteAfter(nowCursor-1)
+        
+
+for i in range(len(word)):
+    if i==nowCursor:
         print("|",end=" ")
-    print(dLinked.nodeAt(i).data,end=" ")
-if cursor==len(dLinked):
+    print(word.nodeAt(i).data,end=" ")
+if nowCursor==len(word):
     print("|",end=" ")
-

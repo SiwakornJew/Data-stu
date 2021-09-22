@@ -89,6 +89,11 @@ class LinkedList():
             temp += str(current.data) + ' -> '
             current = current.next
         return temp[:-3]
+    def nodeAt(self,i) :          
+        p = self.head
+        for j in range(0,i) :
+            p = p.next
+        return p
 
     def get_report(self):
         temp = ''
@@ -105,13 +110,14 @@ class LinkedList():
         print("------------------------------------------------------------")
         stop = False
         counter = 0
-        stop = False
         for i in range(self.max_length+1):
             print("Round : " + str(i+1))
             while not self.is_empty():
                 temp = self.pop_front()[::-1]
                 try:
                     box[int(temp[i])].push_front(temp[::-1])   
+                    print(temp[i],end=' from ')
+                    print(temp[0])
                 except:
                     box[0].push_front(temp[::-1])
             if box[0].length() == self.max:

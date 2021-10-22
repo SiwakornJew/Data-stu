@@ -1,61 +1,39 @@
-a = []
-b = []
-c = []
-def move(n, start, filler, dest, maxn):
-    return
-def pop(start, dest):
-    if start == 'A':
-        x = a.pop(0)
-    elif start == 'B':
-        x = b.pop(0)
-    else:
-        x = c.pop(0)
-    if dest == 'A':
-        a.insert(0,x)
-    elif dest == 'B':
-        b.insert(0,x)
-    else :
-        c.insert(0,x)
-def showTower(maxn, row):
-    global a
-    global b
-    global c
-    acp = a[::-1]
-    bcp = a[::-1]
-    ccp = a[::-1]
-    if row == maxn:
-        print('| | |')
-    if len(a) >= row:
-        print(f"{acp[row-1]}  ",end="")
-    else:
-        print('|  ',end='')
-    if len(a) >= row:
-        print(f"{bcp[row-1]}  ",end="")
-    else:
-        print('|  ',end='')
-    if row !=0:
-        print()
-    showTower(maxn, row-1)
+def TowerofHanoi(round, source, dest, aux):
+    if round>0:
+        TowerofHanoi(round-1, source, aux, dest)
+        pole_lst[aux-1].append(pole_lst[source-1].pop())
+        print("move",round,"from ",chr(ord('A')+source-1), "to" ,chr(ord('A')+aux-1))
+        print('|  |  |')
+        printPole(n,pole_lst[0],pole_lst[1],pole_lst[2])
+        TowerofHanoi(round-1, dest, source, aux)
 
-def move(n, start, filler, dest, maxn):
-    if n == 1:
-        print(f"move {n} from {start} to {dest}")
-        pop(start, dest)
-        showTower(maxn, maxn)
+def printPole(n, p1, p2 ,p3):
+    if n!=0:
+      if len(p1) >= n:
+         print(p1[n-1],end = '  ')
+      else:
+         print('| ',   end = ' ')
+      if len(p2) >= n:
+         print(p2[n-1],end = '  ')
+      else:
+         print('| ',   end = ' ')
+      if len(p3) >= n:
+         print(p3[n-1],end = '  ')
+      else:
+         print('| ',   end = ' ')
+      print()
+      printPole(n-1,p1,p2,p3)
     else:
-        move(n-1, start, dest, filler, maxn)
-        print(f"move {n} from {start} to {dest}") 
-        pop(start, dest)
-        showTower(maxn, maxn)
-        move(n-1, filler, start, dest, maxn)
+        return
 
-def rec_init_a(num, target):
-    global a
-    if num <= target:
-        a.append(num)
-        rec_init_a(num+1, target)  
+def init(n):
+    if n == 0:
+        return []
+    return [n] + init(n-1)
 
-n = int(input("Enter Input : "))
-rec_init_a(1, n)
-showTower(n, n)
-move(n, 'A', 'B', 'C', n)
+n= int(input("Enter Input : "))
+pole_lst = [[],[],[]]
+pole_lst[0] = init(n)
+print('|  |  |')
+printPole(n,pole_lst[0],pole_lst[1],pole_lst[2])
+TowerofHanoi(n,1,2,3)

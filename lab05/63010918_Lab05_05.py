@@ -117,7 +117,7 @@ class LinkedList():
                 try:
                     box[int(temp[i])].push_front(temp[::-1])   
                     print(temp[i],end=' from ')
-                    print(temp[0])
+                    print(temp[::-1])
                 except:
                     box[0].push_front(temp[::-1])
             if box[0].length() == self.max:

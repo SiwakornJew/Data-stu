@@ -1,47 +1,21 @@
-class MyInt :
-    def __init__(self, value) -> None:
-        self.value = value
+#!/usr/bin/env python3
 
-    def __str__(self) :
-        return self.value
+flag = b'REDACTED'
 
-    def __add__(self, obj) :
-        # print('add')
-        # print(self.value)
-        # print(obj.value * 2)
-        # print(f'{self.value} + {(obj.value * 2)}')
-        return self.value + obj.value + (self.value + obj.value)//2
+def enc(plaintext):
+    out = b''
+    for c in plaintext:
+        h = (int(c & 0xF0) >> 4) - 2
+        l = (int(c & 0x0F) + 1) << 4
+        o = int(h) + int(l)
 
-    def toRoman(self) :
-        _num = {"M" : 1000, "CM" : 900, "D" : 500, "CD" : 400, "C" : 100, "XC" : 90, "L" : 50, "XL" : 40, "X" : 10, "IX" : 9, "V" : 5, "IV" : 4, "I" : 1}
-        _roman = ''
-        # print(self.value, _num.get('M'))
-        # print(_num.items())
+        out += bytes([o])
+    return out
 
-        _temp = self.value
-        # print(_temp)
+# ciphertext = enc(flag)
+# print(ciphertext)
+# b'UUUUUUUU\x10\xf2BC"\xc5QaT1\x114!T1DD1Ta1d\x81Q4AD4t!\x81a\x11$1dA!\xe5\x10UUUUUUUU'
 
-        # print('========')
-        for i, j in _num.items() :
-            # print(i, j)
-            while _temp >= j :
-                _temp -= j
-                _roman += i
-        return _roman
-        
-
-if __name__ == '__main__' :
-    print(' *** class MyInt ***')
-    inp1, inp2 = [int(i) for i in input('Enter 2 number : ').split()]
-    # print(inp1, inp2)
-    # print(inp2*2)
-    a = MyInt(inp1)
-    b = MyInt(inp2)
-
-    # print(a.toRoman())
-    # print(b.toRoman())
-
-    print(f'{inp1} convert to Roman : {a.toRoman()}')
-    print(f'{inp2} convert to Roman : {b.toRoman()}')
-
-    print(f'{inp1} + {inp2} = {a + b}')
+def dec(ciphertext):
+    out = b''
+    return out

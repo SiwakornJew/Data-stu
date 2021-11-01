@@ -54,17 +54,6 @@ class LinkedList:
             self.head = self.head.next
         self.size -= 1
         return p.data
-
-    def removeDup(self):
-        dup = []
-        if self.head == None : return
-        p = self.head
-        while p.next != None :
-            dup.append(p.data)
-            if p.next.data in dup:
-                p.next = p.next.next
-            else:
-                p = p.next
     
     def isEmpty(self) :
         return self.size == 0
@@ -74,15 +63,42 @@ class LinkedList:
         for j in range(i) :
             p = p.next
         return p
+        
+    def contentEquivalence(self,lst):
+        if self.size != len(lst): return False
+        temp1=[]
+        temp2=[]
+        for i in range(self.size):
+            temp1.append(self.nodeAt(i).data)
+            temp2.append(lst.nodeAt(i).data)
+        temp1=self.sort(temp1)
+        temp2=self.sort(temp2)
+        for i in range(self.size):
+                if temp1[i]!=temp2[i]:
+                    return False
+        return True
+       
 
-if __name__ == '__main__':
-    inputlist = [int(e) for e in input('Enter numbers : ').split()]
+    def sort(self,lst):
+        if not lst:
+         return []
+        return (self.sort([x for x in lst[1:] if x <  lst[0]])
+            + [lst[0]] +
+            self.sort([x for x in lst[1:] if x >= lst[0]]))
+     
 
-    l = LinkedList()
-    for data in inputlist:
-        l.append(data)
-    print("Linkedlist Before removeDuplicate")
-    print(l)
-    l.removeDup()
-    print("Linkedlist After removeDuplicate")
-    print(l)
+
+inputlist = input('List1,List2 : ').split(',')
+list1 = LinkedList()
+list2 = LinkedList()
+
+for i in inputlist[0].split():
+    list1.append(i)
+for i in inputlist[1].split():
+    list2.append(i)
+
+print('List1 content Equivalence List2 :',list1.contentEquivalence(list2))
+       
+
+
+

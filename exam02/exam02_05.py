@@ -54,17 +54,6 @@ class LinkedList:
             self.head = self.head.next
         self.size -= 1
         return p.data
-
-    def removeDup(self):
-        dup = []
-        if self.head == None : return
-        p = self.head
-        while p.next != None :
-            dup.append(p.data)
-            if p.next.data in dup:
-                p.next = p.next.next
-            else:
-                p = p.next
     
     def isEmpty(self) :
         return self.size == 0
@@ -74,15 +63,53 @@ class LinkedList:
         for j in range(i) :
             p = p.next
         return p
+    def cheakDup(self):
+        temp= []
+        if self.head == None : return
+        p= self.head
+        while p.next != None:
+            temp.append(p.data)
+            if p.next.data in temp:
+                return True
+            else:
+                p =p.next
+        return False
+class Queue:
+    def __init__(self):
+        self.queue=LinkedList()
 
-if __name__ == '__main__':
-    inputlist = [int(e) for e in input('Enter numbers : ').split()]
+    def __str__(self):
+        if self.isEmpty():
+            return 'Empty Queue'
+        s ='Queue data : '
+        for i in range(len(self.queue)):
+            s += str(self.queue.nodeAt(i).data)+' '
+        return s
 
-    l = LinkedList()
-    for data in inputlist:
-        l.append(data)
-    print("Linkedlist Before removeDuplicate")
-    print(l)
-    l.removeDup()
-    print("Linkedlist After removeDuplicate")
-    print(l)
+    def __len__(self):
+        return len(self.queue)
+
+    def enQueue(self,data):
+        self.queue.append(data)
+
+    def deQueue(self):
+        return self.queue.removeHead()
+
+    def isEmpty(self):
+        return self.queue.isEmpty()
+    def cheakDup(self):
+        if self.queue.cheakDup() : return 'Duplicate'
+        else : return 'NO Duplicate'
+   
+inputlst =input("Enter Input : ").split('/')
+s=Queue()
+for i in inputlst[0].split():
+    s.enQueue(i)
+for i in inputlst[1].split(','):
+    #print(i[:1])
+    if i[:1] == 'D' :
+        s.deQueue()
+    elif i[:1] =='E':
+        s.enQueue(i[2:])
+print(s.cheakDup())
+    

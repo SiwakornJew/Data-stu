@@ -54,17 +54,6 @@ class LinkedList:
             self.head = self.head.next
         self.size -= 1
         return p.data
-
-    def removeDup(self):
-        dup = []
-        if self.head == None : return
-        p = self.head
-        while p.next != None :
-            dup.append(p.data)
-            if p.next.data in dup:
-                p.next = p.next.next
-            else:
-                p = p.next
     
     def isEmpty(self) :
         return self.size == 0
@@ -74,15 +63,57 @@ class LinkedList:
         for j in range(i) :
             p = p.next
         return p
+class Queue:
+    def __init__(self):
+        self.queue=LinkedList()
 
-if __name__ == '__main__':
-    inputlist = [int(e) for e in input('Enter numbers : ').split()]
+    def __str__(self):
+        if self.isEmpty():
+            return 'Empty Queue'
+        s ='Queue data : '
+        for i in range(len(self.queue)):
+            s += str(self.queue.nodeAt(i).data)+' '
+        return s
 
-    l = LinkedList()
-    for data in inputlist:
-        l.append(data)
-    print("Linkedlist Before removeDuplicate")
-    print(l)
-    l.removeDup()
-    print("Linkedlist After removeDuplicate")
-    print(l)
+    def __len__(self):
+        return len(self.queue)
+
+    def enQueue(self,data):
+        self.queue.append(data)
+
+    def deQueue(self):
+        return self.queue.removeHead()
+
+    def isEmpty(self):
+        return self.queue.isEmpty()
+
+ilt =input('Enter choice : ')
+if ilt == '1':
+    q1 = Queue()
+    q1.enQueue(10)
+    q1.enQueue(20)
+    q1.enQueue(30)
+    print(q1)
+    q1.deQueue()
+    q1.enQueue(40)
+    print("Size of Queue :",len(q1))
+    print(q1)
+elif ilt == '2':
+    q1 = Queue()
+    q1.enQueue(100)
+    q1.enQueue(200)
+    q1.enQueue(300)
+    q1.deQueue()
+    print(q1)
+    print("Queue is Empty :",q1.isEmpty())
+else:
+    q1 = Queue()
+    q1.enQueue(11)
+    q1.enQueue(22)
+    q1.enQueue(33)
+    q1.deQueue()
+    q1.deQueue()
+    q1.deQueue()
+    print(q1)
+    print("Size of Queue :",len(q1))
+    print("Queue is Empty :",q1.isEmpty())

@@ -54,17 +54,6 @@ class LinkedList:
             self.head = self.head.next
         self.size -= 1
         return p.data
-
-    def removeDup(self):
-        dup = []
-        if self.head == None : return
-        p = self.head
-        while p.next != None :
-            dup.append(p.data)
-            if p.next.data in dup:
-                p.next = p.next.next
-            else:
-                p = p.next
     
     def isEmpty(self) :
         return self.size == 0
@@ -73,16 +62,26 @@ class LinkedList:
         p = self.head
         for j in range(i) :
             p = p.next
-        return p
+        return 
+        
+    def removeDup(self):
+        temp= []
+        if self.head == None : return
+        p= self.head
+        while p.next != None:
+            temp.append(p.data)
+            if p.next.data in temp:
+                p.next =p.next.next
+            else:
+                p =p.next
 
-if __name__ == '__main__':
-    inputlist = [int(e) for e in input('Enter numbers : ').split()]
+inputlist = [int(e) for e in input('Enter numbers : ').split()]
+l = LinkedList()
+for i in inputlist:
+    l.append(i)
 
-    l = LinkedList()
-    for data in inputlist:
-        l.append(data)
-    print("Linkedlist Before removeDuplicate")
-    print(l)
-    l.removeDup()
-    print("Linkedlist After removeDuplicate")
-    print(l)
+print("Linkedlist Before removeDuplicate")
+print(l)
+print("Linkedlist After removeDuplicate")
+l.removeDup()
+print(l)

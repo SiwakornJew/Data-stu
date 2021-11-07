@@ -1,23 +1,26 @@
-def selection(data):
-    swap =False
-    for last in range(len(data) - 1, -1, -1):
-        if data[last] < 0:
-            continue
-        biggest = data[0]
-        biggest_index = 0
-        for i in range(1, last + 1):
-            if data[i] > biggest:
-                swap=True
-                temp= data[last]
-                biggest = data[i]
-                biggest_index = i
-                print(data)
-        data[last], data[biggest_index] = data[biggest_index], data[last]
-        
-    data = [str(a) for a in data]
-    print(' '.join(data))
-        
+def minIndex(data,i,j):
+    if i == j:
+        return i
+    k = minIndex(data,i+1,j)
+    return (i if data[i] < data[k] else k)
 
 
-inp = [int(a) for a in input('Enter Input : ').split()]
-selection(inp)
+def recurSelectionSort(data,n,index=0):
+    if index == n:
+        return -1
+    k = minIndex(data,index,n-1)
+    if k != index:
+        temp1=data[k]
+        temp2=data[index]
+        #print("swap ",temp1,"<->",temp2," : ",data)
+        data[k], data[index] =data[index], data[k]
+        print("swap ",temp1,"<->",temp2," : ",data)
+    recurSelectionSort(data,n,index+1)
+    return data
+
+
+#inp = [int(a) for a in input('Enter Input : ').split()]
+inp=[5,4,3,1,2]
+n=recurSelectionSort(inp,len(inp))
+
+print(n)

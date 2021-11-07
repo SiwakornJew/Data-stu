@@ -1,88 +1,99 @@
-class LinkedList:
-    class Node :
-        def __init__(self,data,next = None) :
-            self.data = data
-            if next is None :
-                self.next = None
-            else :
-                self.next = next
-                
-        def __str__(self) :
-            return str(self.data)
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+        self.level = None
 
-    def __init__(self,head = None):
-        if head == None:
-                self.head = self.tail = None
-                self.size = 0
+    def __str__(self):
+        return str(self.data)
+
+
+treedata = []
+
+
+class BinarySearchTree:
+    global treedata
+
+    def __init__(self):
+        self.root = None
+
+    def insert(self, val):
+        if self.root == None:
+            self.root = Node(val)
         else:
-            self.head = head
-            t = self.head        
-            self.size = 1
-            while t.next != None :
-                t = t.next
-                self.size += 1
-            self.tail = t
-            
-    def __str__(self) :
-        s = 'Linked data : '
-        p = self.head
-        while p != None :
-            s += str(p.data)+' '
-            p = p.next
-        return s
+            current = self.root
 
-    def __len__(self) :
-        return self.size
-    
-    def append(self, data):
-        p = self.Node(data)
-        if self.head == None:
-            self.head = self.tail = p
-        else:
-            t = self.tail
-            t.next = p   
-            self.tail =p  
-        self.size += 1
+            while True:
+                if val < current.data:
+                    # print('less than', val, '<', current.data)
+                    if current.left:
+                        current = current.left
+                    else:
+                        current.left = Node(val)
+                        break
+                elif val > current.data:
+                    # print('greater than', val, '>', current.data)
+                    if current.right:
+                        current = current.right
+                    else:
+                        current.right = Node(val)
+                        break
+                else:
+                    break
 
-    def removeHead(self) :
-        if self.head == None : return
-        if self.head.next == None :
-            p = self.head
-            self.head = None
-        else :
-            p = self.head
-            self.head = self.head.next
-        self.size -= 1
-        return p.data
+    # function to delete element in binary tree
+    def deletion(self, node, data):
+        if node is None:    # base case
+            print("Error! Not Found DATA")
+            return
 
-    def removeDup(self):
-        dup = []
-        if self.head == None : return
-        p = self.head
-        while p.next != None :
-            dup.append(p.data)
-            if p.next.data in dup:
-                p.next = p.next.next
+        if node.data != data:   # not found
+
+            if node.data > data:
+                node.left = self.deletion(node.left, data)  # not found left
+            elif node.data < data:
+                node.right = self.deletion(node.right, data)  # not found right
+
+         
+
+        else:   # found !!!!
+
+            if node.left is None:   # left None
+                node = node.right
+                return node
+            elif node.right is None:  # right None
+                node = node.left
+                return node
             else:
-                p = p.next
-    
-    def isEmpty(self) :
-        return self.size == 0
-    
-    def nodeAt(self,i) :
-        p = self.head
-        for j in range(i) :
-            p = p.next
-        return p
+                current = node.right
+                while current.left is not None:
+                    current = current.left
 
-if __name__ == '__main__':
-    inputlist = [int(e) for e in input('Enter numbers : ').split()]
+                node.data = current.data    # replace delete
+                node.right = self.deletion(node.right, current.data)  # permanent delete recursive.....
 
-    l = LinkedList()
-    for data in inputlist:
-        l.append(data)
-    print("Linkedlist Before removeDuplicate")
-    print(l)
-    l.removeDup()
-    print("Linkedlist After removeDuplicate")
-    print(l)
+        return node
+
+
+def printTree90(node, level=0):
+    if node is None:
+        return
+    printTree90(node.right, level + 1)
+    print('     ' * level, node)
+    printTree90(node.left, level + 1)
+
+# i 3,i 4,i 5,d 3,d 4,d 5
+
+tree = BinarySearchTree()
+data = input("Enter Input : ").split(",")
+for i in range(len(data)):
+    data[i] = data[i].split()
+    if data[i][0] == 'd':
+        print("delete " + (data[i][1]))
+        tree.root = tree.deletion(tree.root, int(data[i][1]))
+        printTree90(tree.root)
+    elif data[i][0] == 'i':
+        print("insert " + (data[i][1]))
+        tree.insert(int(data[i][1]))
+        printTree90(tree.root)

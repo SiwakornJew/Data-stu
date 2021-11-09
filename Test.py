@@ -1,27 +1,26 @@
-def findIndexOfMaxPositive(lists):
-    index = None
-    for i in range(len(lists)):
-        if index == None and lists[i] >= 0:
-            index = i
-        elif index != None and lists[i] >lists[index]:
-            index = i
-    return index
+def get_max_index(lst):
+    right = len(lst)-1
 
-def selectionSort(lists):
-    for i in range(len(lists)-1,-1,-1):
-    
-        if lists[i] >= 0:
-            indexOflastPositive = i
-            swapIndex = findIndexOfMaxPositive(lists[:indexOflastPositive])
-            if swapIndex != None and lists[swapIndex]>=lists[indexOflastPositive]:
-                temp1=lists[swapIndex]
-                temp2=lists[indexOflastPositive]
-                lists[indexOflastPositive],lists[swapIndex] = lists[swapIndex],lists[indexOflastPositive]
-                print("swap ",temp2,"<->",temp1," : ",lists)
-    return lists
+    if lst[right] != max(lst) and right-1 >= 0:
+        return get_max_index(lst[:right])
+    else:
+        return right
 
-#lists = list(map(int,input("Enter Input : ").split(" ")))
-lists=[5,4,3,1,2]
-temp = selectionSort(lists)
-for i in temp:
-    print(i,end=" ")
+
+def selection_sort_rec(lst, right=None):
+    if right is None:
+        right = len(lst)-1
+    if right < 0:
+        return lst
+
+    max_index = get_max_index(lst[:right+1])
+    if max_index != right:  # if not in correct position
+        lst[right], lst[max_index] = lst[max_index], lst[right]
+        print(f'swap {lst[max_index]} <-> {lst[right]} : {lst}')
+    return selection_sort_rec(lst, right-1)
+
+
+if __name__ == '__main__':
+    in_lst = list(map(int, input("Enter Input : ").split()))
+    ans = selection_sort_rec(in_lst)
+    print(in_lst)

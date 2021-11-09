@@ -1,26 +1,22 @@
-def minIndex(data,i,j):
-    if i == j:
-        return i
-    k = minIndex(data,i+1,j)
-    return (i if data[i] < data[k] else k)
+def get_max_index(lst):
+    max_index = len(lst)-1
 
+    if lst[max_index] != max(lst) and max_index-1 >= 0: 
+        return get_max_index(lst[:max_index])
+    else:
+        return max_index
+def selection_sort(lst,right=None):
+    if right is None:
+        right = len(lst)-1
+    if right < 0:
+        return lst
+    
+    max_index = get_max_index(lst[:right+1])
+    if max_index != right:
+        lst[right], lst[max_index] = lst[max_index], lst[right]
+        print(f'swap {lst[max_index]} <-> {lst[right]} : {lst}')
+    return selection_sort(lst, right-1)
 
-def recurSelectionSort(data,n,index=0):
-    if index == n:
-        return -1
-    k = minIndex(data,index,n-1)
-    if k != index:
-        temp1=data[k]
-        temp2=data[index]
-        #print("swap ",temp1,"<->",temp2," : ",data)
-        data[k], data[index] =data[index], data[k]
-        print("swap ",temp1,"<->",temp2," : ",data)
-    recurSelectionSort(data,n,index+1)
-    return data
-
-
-#inp = [int(a) for a in input('Enter Input : ').split()]
-inp=[5,4,3,1,2]
-n=recurSelectionSort(inp,len(inp))
-
-print(n)
+in_lst = list(map(int, input("Enter Input : ").split()))
+ans = selection_sort(in_lst)
+print(in_lst)

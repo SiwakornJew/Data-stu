@@ -36,15 +36,15 @@ def list_sorting(lst):
     return lst
 
 
-if __name__ == '__main__':
-    inp = input("Enter Input : ").split('/')
-    target = int(inp[0])
-    in_lst = list(map(int, inp[1].split()))
-    in_lst = bubble_sort(in_lst)
-    viable_lst = subset_sum(target, in_lst)
-    if len(viable_lst) == 0:
-        print("No Subset")
-    else:
-        viable_lst = list_sorting(viable_lst)
-        for item in viable_lst:
-            print(item)
+
+inp = input("Enter Input : ").split('/')
+target = int(inp[0])
+in_lst = list(map(int, inp[1].split()))
+in_lst = bubble_sort(in_lst)
+viable_lst = subset_sum(target, in_lst)
+if len(viable_lst) == 0:
+    print("No Subset")
+else:
+    viable_lst = list_sorting(viable_lst)
+    for item in viable_lst:
+        print(item)
